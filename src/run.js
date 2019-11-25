@@ -2,12 +2,12 @@ const core = require('@actions/core')
 
 const run = async () => {
   console.log('start')
-  const authorisedLogins = core.getInput('authorisedLogins')
-  console.log(authorisedLogins)
-  const commentAuthor = core.getInput('commentAuthor')
-  console.log(commentAuthor)
-  const commentBody = core.getInput('commentBody')
-  console.log(commentBody)
+  const authorisedLogins = core.getInput('authorisedLogins').split(',')
+  console.log(authorisedLogins.join('|'))
+  const commentJson = core.getInput('commentJson')
+  const comment = JSON.parse(commentJson)
+  console.log('Author ' + comment.user.login)
+  console.log('Body ' + comment.body)
 
   core.setOutput('instruction', 'dive_into_snow')
   // const author = (comment.user || {}).login

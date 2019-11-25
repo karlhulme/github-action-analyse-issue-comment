@@ -8,7 +8,7 @@ The comment will be analysed for the presence of the following instructions:
 ## Inputs
 
 * **authorisedLogins** - A comma-separated list of logins that are authorised to trigger actions from issue comments.
-* **comment** - The comment object raised with the event.
+* **commentJson** - The comment object raised with the event expressed as a JSON string.
 
 ## Outputs
 
@@ -32,5 +32,5 @@ jobs:
         uses: karlhulme/github-action-analyse-issue-comment@master
         with:
           authorisedLogins: personA,personB
-          comment: ${{github.event.comment}}
+          comment: ${{toJson(github.event.comment)}}
 ```
