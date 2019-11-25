@@ -3,6 +3,7 @@ const core = require('@actions/core')
 
 const run = async () => {
   // const { owner } = context.repo
+  console.log('start')
   const authorisedLogins = core.getInput('authorisedLogins').split(',')
   const comment = core.getInput('comment')
 
