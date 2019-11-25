@@ -15,7 +15,7 @@ const entryPoint = async () => {
 
   const output = await run(input)
 
-  console.log(`Output\n${JSON.stringify(input, null, 2)}\n`)
+  console.log(`Output\n${JSON.stringify(output, null, 2)}\n`)
 
   for (const propName in output) {
     core.setOutput(propName, output[propName])
