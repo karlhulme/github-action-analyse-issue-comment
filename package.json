@@ -1,0 +1,28 @@
+{
+  "name": "github-action-analyse-issue-comment",
+  "version": "1.0.0",
+  "description": "Analyses an issue comment to see if there an instruction.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "ncc build src/index.js -o dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karlhulme/github-action-analyse-issue-comment.git"
+  },
+  "author": "Karl Hulme <karlhulme@hotmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/karlhulme/github-action-analyse-issue-comment/issues"
+  },
+  "homepage": "https://github.com/karlhulme/github-action-analyse-issue-comment#readme",
+  "devDependencies": {
+    "jest": "^24.9.0",
+    "standard": "^14.3.1",
+    "@zeit/ncc": "^0.20.5"
+  },
+  "dependencies": {
+    "@actions/core": "^1.0.0",
+    "@actions/github": "^1.0.0"
+  }
+}
