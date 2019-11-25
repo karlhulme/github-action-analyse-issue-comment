@@ -2,16 +2,16 @@ name: 'Analyse Issue Comment'
 description: 'Analyses an issue comment to see if it contains an instruction.'
 author: 'Karl Hulme'
 inputs:
-  author:
-    description: 'The username of the account that created a new comment.'
+  authorisedLogins:
+    description: 'A comma-separated list of logins that are authorised to trigger actions from issue comments.'
     required: true
-  commentBody:
-    description: 'The body of a new comment.'
+  comment:
+    description: 'The comment object raised with the event.'
     required: true
 outputs:
   instruction:
     description: 'A value of ''release'' or empty.'
-  release_branch:
+  releaseBranch:
     description: 'If the instruction is ''release'' this value will contain the name of the branch to be released.'
 runs:
   using: 'node12'

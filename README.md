@@ -7,13 +7,13 @@ The comment will be analysed for the presence of the following instructions:
 
 ## Inputs
 
-* **author** - The username of the person that created the comment.
-* **commentBody** - The contents of the comment that was created.
+* **authorisedLogins** - A comma-separated list of logins that are authorised to trigger actions from issue comments.
+* **comment** - The comment object raised with the event.
 
 ## Outputs
 
 * **instruction** - A value of *release* or empty.
-* **release_branch** - If the instruction is *release* this value will contain the name of the branch to be released.
+* **releaseBranch** - If the instruction is *release* this value will contain the name of the branch to be released.
 
 ## Example
 
@@ -31,6 +31,6 @@ jobs:
       - name: Analyse Comment
         uses: karlhulme/github-action-analyse-issue-comment@master
         with:
-          author: ${{github.event.comment.user.login}}
-          commentBody: ${{github.event.comment.body}}
+          authorisedLogins: personA,personB
+          comment: ${{github.event.comment}}
 ```

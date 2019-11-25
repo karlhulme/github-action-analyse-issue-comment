@@ -57,10 +57,16 @@ const core = __webpack_require__(470)
 // const { GitHub, context } = require('@actions/github')
 
 const run = async () => {
-  const author = core.getInput('author')
-  const commentBody = core.getInput('commentBody')
+  // const { owner } = context.repo
+  const authorisedLogins = core.getInput('authorisedLogins').split(',')
+  const comment = core.getInput('comment')
 
-  console.log(`Author '${author}' wrote: ${commentBody}`)
+  const author = (comment.user || {}).login
+  console.log(`Author: ${author}`)
+  const isAuthorisedUser = authorisedLogins.includes(author)
+  console.log(`isAuthUser: ${isAuthorisedUser}`)
+
+  console.log(`Authorised logins '${authorisedLogins.join('|')}' wrote: ${comment.body}`)
 }
 
 module.exports = run
