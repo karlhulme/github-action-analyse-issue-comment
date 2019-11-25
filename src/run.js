@@ -1,21 +1,20 @@
-const core = require('@actions/core')
+const considerRelease = require('./considerRelease')
 
-const run = async () => {
-  console.log('start')
-  const authorisedLogins = core.getInput('authorisedLogins').split(',')
-  console.log(authorisedLogins.join('|'))
-  const commentJson = core.getInput('commentJson')
+/**
+ * Runs the Github action and returns a keyed object with values for output.
+ * @param {Object} props The input properties to the github action.
+ */
+const run = async ({ authorisedLoginsCsv, commentJson }) => {
+  const authorisedLogins = authorisedLoginsCsv.split(',').map(s => s.trim())
   const comment = JSON.parse(commentJson)
-  console.log('Author ' + comment.user.login)
-  console.log('Body ' + comment.body)
 
-  core.setOutput('instruction', 'dive_into_snow')
-  // const author = (comment.user || {}).login
-  // console.log(`Author: ${author}`)
-  // const isAuthorisedUser = authorisedLogins.includes(author)
-  // console.log(`isAuthUser: ${isAuthorisedUser}`)
+  const isAuthorised = authorisedLogins.includes(comment.user.login)
 
-  // console.log(`Authorised logins '${authorisedLogins.join('|')}' wrote: ${comment.body}`)
+  if (isAuthorised) {
+    return considerRelease(comment.body) || {} // || considerSomethingElse(comment.body)
+  } else {
+    return {}
+  }
 }
 
 module.exports = run

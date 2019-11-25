@@ -7,7 +7,7 @@ The comment will be analysed for the presence of the following instructions:
 
 ## Inputs
 
-* **authorisedLogins** - A comma-separated list of logins that are authorised to trigger actions from issue comments.
+* **authorisedLoginsCsv** - A comma-separated list of logins that are authorised to trigger actions from issue comments.
 * **commentJson** - The comment object raised with the event expressed as a JSON string.
 
 ## Outputs
@@ -31,6 +31,10 @@ jobs:
       - name: Analyse Comment
         uses: karlhulme/github-action-analyse-issue-comment@master
         with:
-          authorisedLogins: personA,personB
-          comment: ${{toJson(github.event.comment)}}
+          authorisedLoginsCsv: personA,personB
+          commentJson: ${{toJson(github.event.comment)}}
 ```
+
+## Development
+
+You must run `npm run build` to create the distribution file.  Do this before committing changes.

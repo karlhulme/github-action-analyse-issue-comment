@@ -4,7 +4,8 @@
   "description": "Analyses an issue comment to see if there an instruction.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "ncc build src/index.js -o dist"
+    "build": "ncc build src/index.js -o dist",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -24,5 +25,17 @@
   "dependencies": {
     "@actions/core": "^1.0.0",
     "@actions/github": "^1.0.0"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 0
+      }
+    },
+    "testEnvironment": "node"
   }
 }

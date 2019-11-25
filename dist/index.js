@@ -50,27 +50,54 @@ module.exports = require("os");
 
 /***/ }),
 
+/***/ 289:
+/***/ (function(module) {
+
+/**
+ * Considers if a comment contains the instruction to perform a release
+ * and if so returns the parts of that instruction.
+ * @param {String} commentBody The body of a comment.
+ */
+const considerRelease = commentBody => {
+  const matches = commentBody.match(/[-][-]release:[a-zA-Z0-9_-]+/g)
+
+  if (matches && matches.length === 1) {
+    const branchName = matches[0].replace('--release:', '')
+
+    return {
+      instruction: 'release',
+      branchName: branchName
+    }
+  }
+
+  return null
+}
+
+module.exports = considerRelease
+
+
+/***/ }),
+
 /***/ 430:
 /***/ (function(module, __unusedexports, __webpack_require__) {
 
-const core = __webpack_require__(470)
+const considerRelease = __webpack_require__(289)
 
-const run = async () => {
-  console.log('start')
-  const authorisedLogins = core.getInput('authorisedLogins').split(',')
-  console.log(authorisedLogins.join('|'))
-  const commentJson = core.getInput('commentJson')
+/**
+ * Runs the Github action and returns a keyed object with values for output.
+ * @param {Object} props The input properties to the github action.
+ */
+const run = async ({ authorisedLoginsCsv, commentJson }) => {
+  const authorisedLogins = authorisedLoginsCsv.split(',').map(s => s.trim())
   const comment = JSON.parse(commentJson)
-  console.log('Author ' + comment.user.login)
-  console.log('Body ' + comment.body)
 
-  core.setOutput('instruction', 'dive_into_snow')
-  // const author = (comment.user || {}).login
-  // console.log(`Author: ${author}`)
-  // const isAuthorisedUser = authorisedLogins.includes(author)
-  // console.log(`isAuthUser: ${isAuthorisedUser}`)
+  const isAuthorised = authorisedLogins.includes(comment.user.login)
 
-  // console.log(`Authorised logins '${authorisedLogins.join('|')}' wrote: ${comment.body}`)
+  if (isAuthorised) {
+    return considerRelease(comment.body) || {} // || considerSomethingElse(comment.body)
+  } else {
+    return {}
+  }
 }
 
 module.exports = run
@@ -363,9 +390,31 @@ module.exports = require("path");
 /***/ 676:
 /***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
 
+const core = __webpack_require__(470)
 const run = __webpack_require__(430)
 
-run()
+/**
+ * The entry point to the Github action.
+ */
+const entryPoint = async () => {
+  const input = {
+    authorisedLoginsCsv: core.getInput('authorisedLoginsCsv'),
+    commentJson: core.getInput('commentJson'),
+    setOutput: core.setOutput
+  }
+
+  console.log(`Inputs\n${JSON.stringify(input, null, 2)}\n`)
+
+  const output = await run(input)
+
+  console.log(`Output\n${JSON.stringify(input, null, 2)}\n`)
+
+  for (const propName in output) {
+    core.setOutput(propName, output[propName])
+  }
+}
+
+entryPoint()
 
 
 /***/ })
