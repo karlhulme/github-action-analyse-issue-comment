@@ -6,7 +6,7 @@ test('Consider release will match a reference to the master branch.', async () =
   expect(considerRelease('we can now do a --release:master.')).toEqual({ instruction: 'release', branchName: 'master' })
 })
 
-test('Consider release will match a reference to n lts branch.', async () => {
+test('Consider release will match a reference to an lts branch.', async () => {
   expect(considerRelease('--release:lts_v2')).toEqual({ instruction: 'release', branchName: 'lts_v2' })
   expect(considerRelease('--release:lts_v2 next')).toEqual({ instruction: 'release', branchName: 'lts_v2' })
 })

@@ -1,4 +1,5 @@
 const considerRelease = require('./considerRelease')
+const considerPublish = require('./considerPublish')
 
 /**
  * Runs the Github action and returns a keyed object with values for output.
@@ -15,7 +16,9 @@ const run = async ({ authorisedLoginsCsv, commentJson }) => {
     const isAuthorised = authorisedLogins.includes(comment.user.login)
 
     if (isAuthorised) {
-      return considerRelease(comment.body) || {} // || considerSomethingElse(comment.body)
+      return considerRelease(comment.body) ||
+        considerPublish(comment.body) ||
+        {} // || considerSomethingElse(comment.body)
     } else {
       return {}
     }

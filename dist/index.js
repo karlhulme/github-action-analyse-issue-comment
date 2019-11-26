@@ -82,6 +82,7 @@ module.exports = considerRelease
 /***/ (function(module, __unusedexports, __webpack_require__) {
 
 const considerRelease = __webpack_require__(289)
+const considerPublish = __webpack_require__(735)
 
 /**
  * Runs the Github action and returns a keyed object with values for output.
@@ -98,7 +99,9 @@ const run = async ({ authorisedLoginsCsv, commentJson }) => {
     const isAuthorised = authorisedLogins.includes(comment.user.login)
 
     if (isAuthorised) {
-      return considerRelease(comment.body) || {} // || considerSomethingElse(comment.body)
+      return considerRelease(comment.body) ||
+        considerPublish(comment.body) ||
+        {} // || considerSomethingElse(comment.body)
     } else {
       return {}
     }
@@ -424,6 +427,34 @@ const entryPoint = async () => {
 }
 
 entryPoint()
+
+
+/***/ }),
+
+/***/ 735:
+/***/ (function(module) {
+
+/**
+ * Considers if a comment contains the instruction to perform a publish
+ * and if so returns the parts of that instruction.
+ * @param {String} commentBody The body of a comment.
+ */
+const considerPublish = commentBody => {
+  const matches = commentBody.match(/[-][-]publish:[a-zA-Z0-9_-]+/g)
+
+  if (matches && matches.length === 1) {
+    const branchName = matches[0].replace('--publish:', '')
+
+    return {
+      instruction: 'publish',
+      branchName: branchName
+    }
+  }
+
+  return null
+}
+
+module.exports = considerPublish
 
 
 /***/ })
