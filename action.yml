@@ -11,6 +11,8 @@ inputs:
 outputs:
   instruction:
     description: 'A value of ''release'' or empty.'
+  analysisFailureReason:
+    description: 'If the analysis was not successful then this value will contain the reason.'
   releaseBranch:
     description: 'If the instruction is ''release'' this value will contain the name of the branch to be released.'
 runs:

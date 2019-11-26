@@ -5,15 +5,24 @@ const considerRelease = require('./considerRelease')
  * @param {Object} props The input properties to the github action.
  */
 const run = async ({ authorisedLoginsCsv, commentJson }) => {
-  const authorisedLogins = authorisedLoginsCsv.split(',').map(s => s.trim())
-  const comment = JSON.parse(commentJson)
+  try {
+    if (!authorisedLoginsCsv) throw new Error('Authorised logins list not supplied.')
+    if (!commentJson) throw new Error('Comment JSON not supplied.')
 
-  const isAuthorised = authorisedLogins.includes(comment.user.login)
+    const authorisedLogins = authorisedLoginsCsv.split(',').map(s => s.trim())
+    const comment = JSON.parse(commentJson)
 
-  if (isAuthorised) {
-    return considerRelease(comment.body) || {} // || considerSomethingElse(comment.body)
-  } else {
-    return {}
+    const isAuthorised = authorisedLogins.includes(comment.user.login)
+
+    if (isAuthorised) {
+      return considerRelease(comment.body) || {} // || considerSomethingElse(comment.body)
+    } else {
+      return {}
+    }
+  } catch (err) {
+    return {
+      analysisFailureReason: err.toString()
+    }
   }
 }
 
