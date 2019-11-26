@@ -13,7 +13,8 @@ The comment will be analysed for the presence of the following instructions:
 ## Outputs
 
 * **instruction** - A value of *release* or empty.
-* **releaseBranch** - If the instruction is *release* this value will contain the name of the branch to be released.
+* **analysisFailureReason** - If the analysis was not successful then this value will contain the reason.
+* **branchName** - If the instruction is *release* this value will contain the name of the branch to be released.
 
 ## Example
 
