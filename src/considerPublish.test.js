@@ -2,8 +2,8 @@
 const considerPublish = require('./considerPublish')
 
 test('Consider publish will match a reference to a version number.', async () => {
-  expect(considerPublish('--publish:v10.2.3')).toEqual({ instruction: 'publish', releaseNumber: 'v10.2.3' })
-  expect(considerPublish('we can now do a --publish:v0.0.12.')).toEqual({ instruction: 'publish', releaseNumber: 'v0.0.12' })
+  expect(considerPublish('--publish:v10.2.3')).toEqual({ instruction: 'publish', releaseVersion: 'v10.2.3' })
+  expect(considerPublish('we can now do a --publish:v0.0.12.')).toEqual({ instruction: 'publish', releaseVersion: 'v0.0.12' })
 })
 
 test('Consider publish will ingore multiple matches.', async () => {

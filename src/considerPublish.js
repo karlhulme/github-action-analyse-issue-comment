@@ -7,11 +7,11 @@ const considerPublish = commentBody => {
   const matches = commentBody.match(/[-][-]publish:v[0-9]+[.][0-9]+[.][0-9]+/g)
 
   if (matches && matches.length === 1) {
-    const releaseNumber = matches[0].replace('--publish:', '')
+    const releaseVersion = matches[0].replace('--publish:', '')
 
     return {
       instruction: 'publish',
-      releaseNumber
+      releaseVersion
     }
   }
 
