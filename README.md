@@ -14,7 +14,8 @@ The comment will be analysed for the presence of the following instructions:
 
 * **instruction** - A value of *release* or empty.
 * **analysisFailureReason** - If the analysis was not successful then this value will contain the reason.
-* **branchName** - If the instruction is *release* or *publish* this value will contain the name of the branch to be actioned.
+* **branchName** - If the instruction is *release* this value will contain the name of the branch to be actioned.
+* **releaseVersion** - If the instruction is *publish* this value will contain the version of the library to be published.
 
 ## Example
 

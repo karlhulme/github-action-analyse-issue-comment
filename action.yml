@@ -14,7 +14,9 @@ outputs:
   analysisFailureReason:
     description: 'If the analysis was not successful then this value will contain the reason.'
   branchName:
-    description: 'If the instruction is ''release'' or ''publish'' this value will contain the name of the branch to be actioned.'
+    description: 'If the instruction is ''release'' this value will contain the name of the branch to be released.'
+  releaseVersion:
+    description: 'If the instruction is ''publish'' this value will contain the version of the library to be published.'
 runs:
   using: 'node12'
   main: 'dist/index.js'
