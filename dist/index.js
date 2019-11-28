@@ -440,14 +440,14 @@ entryPoint()
  * @param {String} commentBody The body of a comment.
  */
 const considerPublish = commentBody => {
-  const matches = commentBody.match(/[-][-]publish:[a-zA-Z0-9_-]+/g)
+  const matches = commentBody.match(/[-][-]publish:v[0-9]+[.][0-9]+[.][0-9]+/g)
 
   if (matches && matches.length === 1) {
-    const branchName = matches[0].replace('--publish:', '')
+    const releaseNumber = matches[0].replace('--publish:', '')
 
     return {
       instruction: 'publish',
-      branchName: branchName
+      releaseNumber
     }
   }
 
